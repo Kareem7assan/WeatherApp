@@ -12,7 +12,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 import retrofit2.Response
 import javax.inject.Inject
 
-class WeatherUseCases @Inject constructor(private val repository: WeatherRepository) {
+class WeatherUseCases @Inject constructor( val repository: WeatherRepository) {
 
     fun searchCityUseCase(city: String):  Observable<Response<WeatherModel>> {
                 return repository.searchWeatherCityRemote(city)
