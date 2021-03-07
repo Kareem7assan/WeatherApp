@@ -1,0 +1,100 @@
+import deps.Config
+import deps.Deps
+
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'dagger.hilt.android.plugin'
+    id 'kotlin-kapt'
+}
+
+
+android {
+    compileSdkVersion Config.compileSdk
+    buildToolsVersion Config.buildToolsSdk
+
+    defaultConfig {
+        applicationId Config.id
+        minSdkVersion Config.minsdk
+        targetSdkVersion Config.targetsdk
+        versionCode Config.version_code
+        versionName Config.version_name
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildFeatures {
+        viewBinding true
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    //essentials
+    implementation Deps.kotlin.stdLib
+    implementation Deps.androidx.core
+    implementation Deps.androidx.appCompat
+    implementation Deps.androidx.constraintLayout
+    implementation Deps.android.material
+    implementation Deps.android.material
+    //hilt
+    implementation Deps.dagger_hilt.hilt
+    kapt Deps.dagger_hilt.hilt_compiler
+    //room
+    implementation Deps.jetpack.room
+    implementation Deps.jetpack.compilerRoom
+    //retrofit
+    implementation Deps.retrofit.retrofit_lib
+    implementation Deps.retrofit.gson
+    implementation Deps.retrofit.okHttp
+
+    //anko
+    implementation Deps.anko.anko
+    //ktx
+    implementation Deps.ktx.ktx
+    implementation Deps.ktx.ktx_activity
+
+
+    //rx
+    implementation Deps.rx.rxAndroid
+    implementation Deps.rx.rxKotlin
+    implementation Deps.rx.rxjava
+    implementation Deps.rx.adapter_rxjava3
+    implementation Deps.rx.rxBinding
+
+    //unit test
+    testImplementation Deps.test.junit
+    testImplementation Deps.test.mockito
+    testImplementation Deps.test.archTest
+    testImplementation Deps.test.truthTest
+    testImplementation Deps.jetpack.testRoom
+
+
+    //android test
+    androidTestImplementation Deps.jetpack.testRoom
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation Deps.test.truthTest
+    androidTestImplementation Deps.test.junitAndroid
+    androidTestImplementation 'androidx.test:runner:1.3.0'
+    androidTestImplementation 'androidx.test:rules:1.3.0'
+    // Optional -- Hamcrest library
+    androidTestImplementation 'org.hamcrest:hamcrest-library:1.3'
+    // Optional -- UI testing with Espresso
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    // Optional -- UI testing with UI Automator
+    androidTestImplementation 'androidx.test.uiautomator:uiautomator:2.2.0'
+
+
+
+}
