@@ -33,7 +33,7 @@ class WeatherUseCasesTest {
     fun setUp() {
         MockitoAnnotations.initMocks(this)
         weatherUseCases = WeatherUseCases(repository)
-        RxJavaPlugins.setIoSchedulerHandler{ Schedulers.trampoline()}
+
 
     }
 
@@ -83,8 +83,8 @@ class WeatherUseCasesTest {
 
     @Test
     fun `searchCityUseCase() with wrong city parm assert not complete`() {
-        val existingCity = Mockito.anyString()
-        Mockito.`when`(repository.searchWeatherCityRemote(existingCity)).thenReturn(
+        val notExistingCity = Mockito.anyString()
+        Mockito.`when`(repository.searchWeatherCityRemote(notExistingCity)).thenReturn(
             Observable.error(
                 Throwable()
             )
@@ -94,8 +94,8 @@ class WeatherUseCasesTest {
     }
     @Test
     fun `searchWeatherCityCacheUseCase() with wrong city parm assert not complete`() {
-        val existingCity = Mockito.anyString()
-        Mockito.`when`(repository.searchWeatherCityCache(existingCity)).thenReturn(
+        val notExistingCity = Mockito.anyString()
+        Mockito.`when`(repository.searchWeatherCityCache(notExistingCity)).thenReturn(
             Observable.error(
                 Throwable()
             )
@@ -106,16 +106,15 @@ class WeatherUseCasesTest {
 
     @Test
     fun `searchCityUseCase() with wrong city parm not then invoke saveWeather()`() {
-        val existingCity = Mockito.anyString()
+        val notExistingCity = Mockito.anyString()
         val fakeWeather = getFakeWeather()
-        Mockito.`when`(repository.searchWeatherCityRemote(existingCity)).thenReturn(
+        Mockito.`when`(repository.searchWeatherCityRemote(notExistingCity)).thenReturn(
             Observable.error(
                 Throwable()
             )
         )
         val testObserver = TestObserver<Response<WeatherModel>>()
-
-        weatherUseCases.searchCityUseCase(existingCity).subscribe(testObserver)
+        weatherUseCases.searchCityUseCase(notExistingCity).subscribe(testObserver)
         verify(repository, times(0)).saveWeather(fakeWeather)
     }
 

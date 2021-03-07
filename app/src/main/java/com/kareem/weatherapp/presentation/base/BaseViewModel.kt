@@ -33,8 +33,8 @@ open class BaseViewModel:ViewModel() {
 
     fun <T> Observable<Response<T>>.subscribeWithLoading(
         onSuccess: (T) -> Unit,
-        onDataError: (throwable: Throwable) -> Unit  ,
-        onGeneralError: (throwable: Throwable) -> Unit ) {
+        onDataError: (throwable: Throwable) -> Unit= { throw  it }  ,
+        onGeneralError: (throwable: Throwable) -> Unit= { throw  it } ) {
         doOnSubscribe { viewState.value= Loading(true) }
         .doFinally{ viewState.value= Loading(false) }
         .subscribe ({

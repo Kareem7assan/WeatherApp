@@ -23,11 +23,9 @@ class WeatherViewModel @Inject constructor(private val useCases: WeatherUseCases
     fun searchCity(cityName: String){
             useCases.searchCityUseCase(cityName)
                     .subscribeWithLoading(onSuccess = { viewState.value = Success(it) }, onGeneralError = { invokeUseCaseCache(cityName) }, onDataError = { viewState.value = Fail(it) })
-
-
     }
 
-    private fun invokeUseCaseCache(cityName: String) {
+     fun invokeUseCaseCache(cityName: String) {
         useCases.searchWeatherCityCacheUseCase(cityName)
                 .doOnSubscribe { viewState.value= Loading(true) }
                 .doFinally{ viewState.value= Loading(false) }

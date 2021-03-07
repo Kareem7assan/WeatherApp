@@ -95,6 +95,7 @@ dependencies {
     // Optional -- UI testing with UI Automator
     androidTestImplementation 'androidx.test.uiautomator:uiautomator:2.2.0'
 
+    testImplementation 'org.mockito:mockito-inline:2.21.0'
 
 
 }
